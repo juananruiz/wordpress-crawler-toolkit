@@ -1,0 +1,13 @@
+# Salidas del scraping: no forman parte de la herramienta, son datos de cada uso
+salida/
+*.zip
+
+# Resultados de auditoría/fetch (regenerables)
+broken.json
+broken_fetch_results.json
+*_fetch_results.json
+
+# Sistema
+.DS_Store
+__pycache__/
+*.pyc
