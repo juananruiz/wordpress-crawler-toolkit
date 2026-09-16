@@ -35,15 +35,19 @@ manual llevó a varios problemas repetidos que estos scripts automatizan.
 ### Con un solo comando
 
 `run.sh` encadena descarga + normalización + auditoría + descarga de páginas
-que falten, **una sola vez**, y al final te dice cuántas páginas rotas
-quedan. Si quedan páginas rotas en cascada (ver más abajo), te da el mismo
-comando para volver a lanzarlo — no repite el ciclo solo, así siempre ves qué
-está pasando en cada vuelta.
+que falten. Admite dos modos, con `--manual` por defecto:
+
+- **`--manual`** (por defecto) — hace una sola vuelta y para. Si quedan
+  páginas rotas en cascada (ver más abajo), te da el mismo comando para
+  volver a lanzarlo, así ves qué pasa en cada vuelta antes de decidir seguir.
+- **`--auto`** — repite el ciclo auditoría→descarga→normalizar él solo,
+  hasta que no queden páginas rotas o se alcance un límite de seguridad de
+  15 vueltas (por si el sitio tiene enlaces genuinamente rotos que nunca van
+  a resolverse — entonces avisa y para en lugar de repetir para siempre).
 
 ```bash
-./scripts/run.sh https://ejemplo.com ./salida
-# si al final dice que quedan páginas rotas, se repite tal cual:
-./scripts/run.sh https://ejemplo.com ./salida
+./scripts/run.sh https://ejemplo.com ./salida            # modo manual (por defecto)
+./scripts/run.sh --auto https://ejemplo.com ./salida      # modo auto
 # cuando ya no queden páginas rotas:
 ./scripts/serve.sh ./salida/www.ejemplo.com 8000
 ```
