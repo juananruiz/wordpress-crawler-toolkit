@@ -32,6 +32,24 @@ manual llevó a varios problemas repetidos que estos scripts automatizan.
 
 ## Flujo de trabajo
 
+### Con un solo comando
+
+`run.sh` encadena descarga + normalización + auditoría + descarga de páginas
+que falten, **una sola vez**, y al final te dice cuántas páginas rotas
+quedan. Si quedan páginas rotas en cascada (ver más abajo), te da el mismo
+comando para volver a lanzarlo — no repite el ciclo solo, así siempre ves qué
+está pasando en cada vuelta.
+
+```bash
+./scripts/run.sh https://ejemplo.com ./salida
+# si al final dice que quedan páginas rotas, se repite tal cual:
+./scripts/run.sh https://ejemplo.com ./salida
+# cuando ya no queden páginas rotas:
+./scripts/serve.sh ./salida/www.ejemplo.com 8000
+```
+
+### Paso a paso (si prefieres ir viendo cada fase)
+
 ```bash
 # 1. Descarga inicial (resumible: se puede volver a lanzar igual si se corta)
 ./scripts/mirror.sh https://ejemplo.com ./salida
